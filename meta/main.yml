@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: elgeeko1-lirc-blaster
+  role_name: elgeeko1-lirc-blaster-ansible
   author: elgeeko1
-  description: "Ansible role to install lirc-blaster in a docker container"
+  description: "Ansible role to install lirc, USB blaster and lirc-web"
   license: MIT
   platforms:
     - name: Ubuntu

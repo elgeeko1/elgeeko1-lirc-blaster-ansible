@@ -1,0 +1,8 @@
+# path to lirc socket on the host
+lirc_socket: "/run/lirc/lircd"
+
+# path to lircd.conf.d on the host (contains remote config files)
+lirc_conf_d: "/etc/lirc/lircd.conf.d"
+
+# port to run lirc-web
+lirc_web_port: 3000

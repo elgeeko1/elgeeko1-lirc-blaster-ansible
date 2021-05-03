@@ -1,12 +1,14 @@
 # Ansible role to configure a USB IR transmitter as a remote
 This role configures a host to use USB IR transmitter (aka "blaster")
-to emulate a remote, such as a stereo or TV remote.
+to emulate a remote, such as a stereo or TV remote. It further hosts
+a web interface for remote control of your remote control (whoa... meta).
 
 Features:
-- installs latest lirc
+- installs latest lirc package
 - installs remote configuration files (two examples included)
 - configures lirc to send commands to a USB IR blaster
 - configures lirc to run as a service at startup (via systemd)
+- deploys the latest docker image [elgeeko/lirc-web](https://hub.docker.com/repository/docker/elgeeko/lirc-web) and configures it to run at startup.
 
 # Requirements
 Provisioning host:
@@ -21,6 +23,8 @@ Host that will run lirc-blaster:
 - Ubuntu 18.04 or later (or Debian-based Linux distro running apt)
 - USB IR transmitter
   - This role is tested with [FTDI Based USB IR Blaster](http://www.irblaster.info/usb_blaster.html)
+- docker
+  - An ansible role for installing docker is available from https://github.com/elgeeko1/elgeeko1-docker-ansible.git
 
 # How to use this role
 ### Method 1: Install using ansible-galaxy
@@ -74,7 +78,6 @@ See [FTDI USB IR Blaster / Transmitter using LIRC](https://www.mythtv.org/wiki/F
 Set the role variable `LIRC_BLASTER_SERIAL` to the serial number of your remote.
 
 ### Configure remotes
-
 Set the role variable `LIRC_BLASTER_REMOTES` to the list of remote configuration
 files to be installed with LIRC.
 
@@ -88,6 +91,16 @@ Using the two examples included in this repository:
       - smsl-rc1.lircd.conf
       - yamaha-ras13.lircd.conf
 ```
+
+### Configure the web service
+Path to lirc socket on the host:
+`lirc_socket: "/run/lirc/lircd"`
+
+Path to lircd.conf.d on the host (contains remote config files):
+`lirc_conf_d: "/etc/lirc/lircd.conf.d"`
+
+Port to run lirc-web
+`lirc_web_port: 3000`
 
 # Hardware
 - USB IR blaster: https://www.irblaster.info/usb_blaster.html

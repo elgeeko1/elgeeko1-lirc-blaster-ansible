@@ -1,54 +1,6 @@
 ---
-- name: Install apt package lirc
-  apt:
-    pkg:   lirc
-    state: latest
-  become: true
+- name: install lirc
+  include_tasks: lirc.yml
 
-- name: Deploy lirc remote configuration
-  copy:
-    src:   "{{ item }}"
-    dest:  /etc/lirc/lircd.conf.d/
-    owner: root
-    group: root
-    mode:  0655
-  become: true
-  with_items: "{{ LIRC_BLASTER_REMOTES }}"
-  notify: lircd_restart
-
-- name: Disable devinput lirc configuration (dist)
-  file:
-    path:  /etc/lirc/lircd.conf.d/devinput.lircd.conf.dist
-    state: absent
-  become: true
-  notify: lircd_restart
-
-- name: Disable devinput lirc configuration (conf)
-  file:
-    path: /etc/lirc/lircd.conf.d/devinput.lircd.conf
-    state: absent
-  become: true
-  notify: lircd_restart
-
-- name: Deploy lircd.service
-  template:
-    src:   lircd.service
-    dest:  /lib/systemd/system/lircd.service
-    owner: root
-    group: root
-    mode:  0655
-  become: true
-  notify:
-    - lircd_restart
-    - reboot
-    # wtf not sure why but changing device serial number
-    # or configuration doesn't work with a service restart
-    # alone, so just whack the whole damn thing.
-    #
-    # Ain't nobody got tiiiime to debug this shit.
-
-- name: Enable lircd service
-  service:
-    name:  lircd
-    state: started
-  become: true
+- name: install lirc-web
+  include_tasks: lirc-web.yml

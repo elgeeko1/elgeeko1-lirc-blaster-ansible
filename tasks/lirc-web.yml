@@ -1,0 +1,22 @@
+---
+- name: Docker pull elgeeko/lirc-web:latest
+  docker_image:
+    name: elgeeko/lirc-web:latest
+    source: pull
+    force_source: true
+  register: dockerimage
+
+- name: Start lirc-web docker container
+  docker_container:
+    name: lirc-web
+    image: elgeeko/lirc-web:latest
+    state: started
+    restart: "{{ dockerimage.changed }}"
+    restart_policy: unless-stopped
+    volumes:
+      - "{{ lirc_socket }}:/run/lirc/lircd"
+      - "{{ lirc_conf_d }}:/etc/lirc/lircd.conf.d:ro"
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - "{{ lirc_web_port }}:3000"
