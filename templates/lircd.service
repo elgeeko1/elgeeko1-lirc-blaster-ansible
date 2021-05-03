@@ -1,0 +1,13 @@
+[Unit]
+Documentation=man:lircd(8)
+Documentation=http://lirc.org/html/configure.html
+Description=IR Blaster
+Wants=lircd-setup.service
+After=network.target lircd-setup.service
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/lircd --driver ftdix --device=serial={{ LIRC_BLASTER_SERIAL }} --nodaemon
+
+[Install]
+WantedBy=multi-user.target

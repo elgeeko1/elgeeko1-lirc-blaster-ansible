@@ -1,0 +1,9 @@
+galaxy_info:
+  role_name: elgeeko1-lirc-blaster
+  author: elgeeko1
+  description: "Ansible role to install lirc-blaster in a docker container"
+  license: MIT
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all

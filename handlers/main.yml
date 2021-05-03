@@ -1,0 +1,11 @@
+---
+- name: lircd_restart
+  service:
+    name: lircd
+    state: restarted
+  become: true
+
+- name: reboot
+  reboot:
+    msg: "Ansible reboot - lircd-blaster role"
+  become: true
