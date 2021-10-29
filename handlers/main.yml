@@ -1,11 +1,11 @@
 ---
 - name: lircd_restart
-  service:
+  ansible.builtin.service:
     name: lircd
     state: restarted
   become: true
 
 - name: reboot
-  reboot:
+  ansible.builtin.reboot:
     msg: "Ansible reboot - lircd-blaster role"
   become: true

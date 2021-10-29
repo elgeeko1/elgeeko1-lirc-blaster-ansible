@@ -1,12 +1,12 @@
 ---
 - name: Install apt package lirc
-  apt:
+  ansible.builtin.apt:
     pkg:   lirc
     state: latest
   become: true
 
 - name: Deploy lirc remote configuration
-  copy:
+  ansible.builtin.copy:
     src:   "{{ item }}"
     dest:  /etc/lirc/lircd.conf.d/
     owner: root
@@ -17,21 +17,21 @@
   notify: lircd_restart
 
 - name: Disable devinput lirc configuration (dist)
-  file:
+  ansible.builtin.file:
     path:  /etc/lirc/lircd.conf.d/devinput.lircd.conf.dist
     state: absent
   become: true
   notify: lircd_restart
 
 - name: Disable devinput lirc configuration (conf)
-  file:
+  ansible.builtin.file:
     path: /etc/lirc/lircd.conf.d/devinput.lircd.conf
     state: absent
   become: true
   notify: lircd_restart
 
 - name: Deploy lircd.service
-  template:
+  ansible.builtin.template:
     src:   lircd.service
     dest:  /lib/systemd/system/lircd.service
     owner: root
@@ -48,7 +48,7 @@
     # Ain't nobody got tiiiime to debug this shit.
 
 - name: Enable lircd service
-  service:
+  ansible.builtin.service:
     name:  lircd
     state: started
   become: true

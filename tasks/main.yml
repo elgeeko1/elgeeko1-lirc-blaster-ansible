@@ -1,6 +1,12 @@
 ---
+- name: apt update cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600 # 1 hr
+  become: true
+
 - name: install lirc
-  include_tasks: lirc.yml
+  ansible.builtin.import_tasks: lirc.yml
 
 - name: install lirc-web
-  include_tasks: lirc-web.yml
+  ansible.builtin.import_tasks: lirc-web.yml

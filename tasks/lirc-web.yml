@@ -1,13 +1,13 @@
 ---
 - name: Docker pull elgeeko/lirc-web:latest
-  docker_image:
+  community.general.docker_image:
     name: elgeeko/lirc-web:latest
     source: pull
     force_source: true
   register: dockerimage
 
 - name: Start lirc-web docker container
-  docker_container:
+  community.general.docker_container:
     name: lirc-web
     image: elgeeko/lirc-web:latest
     state: started
